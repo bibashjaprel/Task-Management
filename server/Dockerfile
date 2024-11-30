@@ -11,7 +11,7 @@ COPY ./server/package.json ./server/package-lock.json ./
 RUN npm install
 
 # Copy the rest of the application
-COPY ./server ./
+COPY ./server ./ 
 
 # Expose the port your backend server will run on
 EXPOSE 5001

@@ -11,7 +11,7 @@ COPY ./client/package.json ./client/package-lock.json ./
 RUN npm install
 
 # Copy the rest of the application
-COPY ./client ./
+COPY ./client ./ 
 
 # Build the React app for production
 RUN npm run build

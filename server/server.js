@@ -1,11 +1,15 @@
 const express = require('express');
 const app = express();
 require('dotenv').config();
+const cors = require('cors');
 const connectDB = require('./db/dbconfig');
 const TaskRoutes = require('./routes/tasks.routes');
 const authRoutes = require('./routes/user.routes')
 connectDB();
 const PORT = process.env.PORT || 5000; // Default Port 5000
+
+//enable cors 
+app.use(cors());
 
 // Middleware to parse JSON bodies
 app.use(express.json());

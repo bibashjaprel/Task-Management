@@ -31,6 +31,11 @@ const Login = () => {
         email,
         password,
       });
+      console.log('Login successful:', response.data);
+    } catch (err) {
+      console.error('Error during login:', err.response ? err.response.data : err.message);
+    }
+    
 
       const user = response.data; // User object contains token and details
 

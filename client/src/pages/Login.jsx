@@ -18,46 +18,48 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Set loading state to true when the form is submitted
-
+  
     // Basic front-end validation
     if (!email || !password) {
       setError('Both email and password are required.');
       setLoading(false);
       return;
     }
-
+  
     try {
       const response = await axios.post('/api/v1/user/login', {
         email,
         password,
       });
+  
+      // Log the response for debugging
       console.log('Login successful:', response.data);
-    } catch (err) {
-      console.error('Error during login:', err.response ? err.response.data : err.message);
-    }
-    
-
+  
       const user = response.data; // User object contains token and details
-
+  
       // Store the token and user object in localStorage
       localStorage.setItem('token', user.token);
       localStorage.setItem('user', JSON.stringify(user));
-
+  
       // Redirect to dashboard after successful login
       navigate('/'); // Example redirect
-
+  
       alert('Login successful!');
     } catch (err) {
       setLoading(false); // Set loading state to false after request is done
+  
       // Handle error response
       if (err.response && err.response.data.error) {
         setError(err.response.data.error); // Show error message from the server
       } else {
         setError('Login failed. Please try again.'); // Generic error message
       }
+  
+      // Log the error for debugging
+      console.error('Error during login:', err.response ? err.response.data : err.message);
     }
   };
-
+  
   const handleSignupRedirect = () => {
     navigate('/signup'); // Navigate to the signup page
   };

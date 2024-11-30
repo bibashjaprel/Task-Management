@@ -1,0 +1,37 @@
+version: '3.7'
+
+services:
+  # Backend service
+  backend:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    container_name: backend_service
+    ports:
+      - "5001:5001"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/taskdb
+      - SECRET=SUperSecrE7PaSSW0rd
+      - PORT=5001
+    depends_on:
+      - mongo
+
+  # Frontend service
+  frontend:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    container_name: frontend_service
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  # MongoDB service
+  mongo:
+    image: mongo:latest
+    container_name: mongo_service
+    volumes:
+      - ./mongo-data:/data/db
+    ports:
+      - "27017:27017"
